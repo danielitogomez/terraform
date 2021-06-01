@@ -1,0 +1,59 @@
+#!groovy
+
+def FAILED_STAGE
+
+pipeline {
+  agent {
+    kubernetes {
+      label "terraform-${UUID.randomUUID().toString()}"
+      yamlFile 'AgentPod.yaml'
+      defaultContainer 'terraform'
+    }
+  }
+  options { disableConcurrentBuilds() }
+  environment {
+
+        }
+
+  stages {
+    stage('Terraform Format') {
+      steps {
+          script {
+              sh """
+                echo format
+              """
+        }
+      }
+    }
+    stage('Terraform init') {
+      steps {
+          script {
+              sh """
+                echo init
+              """
+        }
+      }
+    }
+    stage('Terraform Plan') {
+      steps {
+          script {
+              sh """
+                echo Plan
+              """
+            }
+        }
+      }
+    stage('Terraform Apply') {
+      when {
+        branch 'master'
+      }
+      steps {
+          script {
+              sh """
+                echo Apply
+              """
+        }
+      }
+    }
+  } 
+}
