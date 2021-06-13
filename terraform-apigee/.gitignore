@@ -7,4 +7,3 @@ crash.log
 *.tfstate.*
 **/.terraform/*
 .terraform
-Dockerfile
