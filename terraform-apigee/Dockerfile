@@ -17,4 +17,4 @@ RUN apk add --no-cache nettle=3.7.2-r0
 RUN apk add --no-cache curl=7.77.0-r0
 
 WORKDIR /usr/local/bin/
-COPY --from=builder . /usr/local/å
+COPY --from=builder . /usr/local/
