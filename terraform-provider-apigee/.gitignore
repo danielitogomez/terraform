@@ -1,0 +1,5 @@
+dist
+*.iml
+.idea
+terraform-provider-apigee*
+vendor

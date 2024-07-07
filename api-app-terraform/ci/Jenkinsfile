@@ -1,0 +1,29 @@
+pipeline {
+    
+    agent any
+
+    stages {
+        stage('Terraform Init') {
+            steps {
+                sh 'terraform init'
+            }
+        }
+        stage('Terraform Plan') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'terraform-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh '''
+                        export TF_VAR_username=$USERNAME
+                        export TF_VAR_password=$PASSWORD
+                        terraform plan -var "access_key=$TF_VAR_username" -var "secret_key=$TF_VAR_password"
+                    '''
+                }
+            }
+        }
+        stage('Terraform Apply') {
+            steps {
+                sh 'echo mock terraform apply' 
+                //sh 'terraform apply -auto-approve'
+            }
+        }
+    }
+}
